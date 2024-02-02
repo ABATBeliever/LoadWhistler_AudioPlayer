@@ -19,30 +19,29 @@ GetWindowLong hwnd, -16
 SetWindowLong hwnd, -16, stat - $80000
 
 objsize 50,50
-pos 0,0:button gosub "“Ç",*MCI_SELECT
-pos 50,0:button gosub "Ä/’â",*MCI_RUN
-pos 100,0:button gosub "’â~",*MCI_RESET
-pos 150,0:button gosub "I—¹",*WindowExit
+pos 0,0:button gosub "èª­è¾¼",*MCI_SELECT
+pos 50,0:button gosub "å†/åœ",*MCI_RUN
+pos 100,0:button gosub "åœæ­¢",*MCI_RESET
+pos 150,0:button gosub "çµ‚äº†",*WindowExit
 pos 0,50:winobj "msctls_trackbar32", "", , $50000000 | $1, 200, 150
 hTrackbar = objinfo(stat, 2)
 sendmsg hTrackbar, $405, 1, 100
 sendmsg hTrackbar, $414, 10
-sendmsg hTrackbar, $408, 1, 500	; Å‘å’l
-sendmsg hTrackbar, $407, 1, 1	; Å¬’l
+sendmsg hTrackbar, $408, 1, 500	; æœ€å¤§å€¤
+sendmsg hTrackbar, $407, 1, 1	; æœ€å°å€¤
 oncmd gosub *vscroll, $114
-states=0//0:‚È‚µ 1:’â~ 2:Ä¶’†
+states=0//0:ãªã— 1:åœæ­¢ 2:å†ç”Ÿä¸­
 stop
 
 *MCI_SELECT
 gosub *MCI_RESET
-dialog "wav;*.mp3;*.mid;*.wma", 16, "ƒtƒ@ƒCƒ‹"
+dialog "wav;*.mp3;*.mid;*.wma", 16, "ãƒ•ã‚¡ã‚¤ãƒ«"
 if refstr = ""{stop}
 file=refstr
 exist file
 if strsize = -1 {stop}
 FileName=getpath(file, 8)
 FileLast=getpath(file, 2)
-if FileName="about"{dialog ""+AppName+" "+AppVer+" "+AppDay +"\nby "+Developer,0,AppName+AppVer:return}
 if FileLast=""{FileLast="?"}
 if FileLast!=".wav" & FileLast!=".mp3" & FileLast!=".mid" & FileLast!=".wma" {title"["+FileLast+"] isn't support.":return}
 mci "open \""+refstr+"\" type mpegvideo alias AE"
@@ -59,11 +58,11 @@ vol=1
 if states = 0 {title AppName:return}
 if states = 1{
 states=2
-mci "play AE" ; Ä¶
+mci "play AE" ; å†ç”Ÿ
 
 repeat
 gosub *vscroll
-mci "status AE position" ; Ä¶ŠÔæ“¾
+mci "status AE position" ; å†ç”Ÿæ™‚é–“å–å¾—
 tmp=stat
 if tmp = FileEOF {await 100:mci "play AE from 0":mci "stop AE":goto *MCI_RUN}
 title "["+strf("%02d",tmp/1000/60)+":"+strf("%02d",tmp/1000\60)+"/"+FileLength+"] "+FileName
@@ -74,13 +73,13 @@ loop
 }else{
 	
 states=1
-mci "stop AE" ; Ä¶’â~
+mci "stop AE" ; å†ç”Ÿåœæ­¢
 return
 }
 
 *MCI_RESET
 states = 0
-mci "close AE" ; Ä¶’â~
+mci "close AE" ; å†ç”Ÿåœæ­¢
 title AppName
 return
 
