@@ -1,12 +1,10 @@
 #packopt icon "icon.ico"
+#include "user32.as"
 // LoadWhistler
 // Made by ABATBeliever
-// 2024/02/02
 screen 0,200,80
-width ,,(ginfo(0)-30),(ginfo(1)-50)
-#include "user32.as"
 AppName="LoadWhistler"
-AppVer="1.0"
+AppVer="1.0.3"
 AppDay="2024/02/02"
 Developer="ABATBeliever"
 onexit *WindowExit
@@ -42,6 +40,7 @@ exist file
 if strsize = -1 {stop}
 FileName=getpath(file, 8)
 FileLast=getpath(file, 2)
+if FileName="about"{dialog ""+AppName+" "+AppVer+" "+AppDay +"\nby "+Developer,0,AppName+AppVer:return}
 if FileLast=""{FileLast="?"}
 if FileLast!=".wav" & FileLast!=".mp3" & FileLast!=".mid" & FileLast!=".wma" {title"["+FileLast+"] isn't support.":return}
 mci "open \""+refstr+"\" type mpegvideo alias AE"
